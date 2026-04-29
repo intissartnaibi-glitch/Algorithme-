@@ -1,7 +1,14 @@
 # Algorithme-
-Exercice 1 — Création d'une liste aléatoire
+
+
+Exercice 1 — 
+
+Création d'une liste aléatoire
 Création d'une liste chaînée de n éléments avec des valeurs aléatoires entre 0 et max. Chaque nouvel élément
 est inséré en tête.
+
+
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
@@ -26,9 +33,21 @@ void AfficherListe(LISTE *L) {
  while (L) { printf("%d -> ", L->val); L = L->suivant; }
  printf("NULL\n");
 }
+
+
+
 Complexité : O(n) — une allocation par élément.
-7.2 Exercice 2 — Recherche d'une valeur
+
+
+
+
+7.2 Exercice 2 
+
+— Recherche d'une valeur
 Parcours séquentiel de la liste jusqu'à trouver la valeur cible ou atteindre la fin.
+
+
+
 int RechercherValeur(LISTE *L, int valeur) {
  LISTE *ptr = L;
  while (ptr != NULL) {
@@ -38,9 +57,22 @@ int RechercherValeur(LISTE *L, int valeur) {
  }
  return 0; // non trouvé
 }
+
+
+
 Complexité : O(n) dans le pire cas (valeur absente ou en fin de liste).
-7.3 Exercice 3 — Suppression de la valeur minimale
-On parcourt la liste pour repérer le minimum, puis on met à jour les pointeurs pour l'exclure avant de libérer la int SupprimerMin(LISTE **L) {
+
+
+
+7.3 Exercice 3 
+
+
+— Suppression de la valeur minimale
+On parcourt la liste pour repérer le minimum, puis on met à jour les pointeurs pour l'exclure avant de libérer la 
+
+
+
+int SupprimerMin(LISTE **L) {
  if (*L == NULL) return 0;
  if ((*L)->suivant == NULL) { free(*L); *L = NULL; return 1; }
  LISTE *ptr = *L, *precMin = NULL, *minPtr = *L;
@@ -60,10 +92,27 @@ On parcourt la liste pour repérer le minimum, puis on met à jour les pointeurs
  free(minPtr);
  return 1;
 }
+
+
+
+
+
 Complexité : O(n) — un seul parcours de la liste.
-7.4 Exercice 4 — Fusion de deux listes en alternance
+
+
+
+
+
+7.4 Exercice 4 —
+
+
+
+ Fusion de deux listes en alternance
 On construit une nouvelle liste en intercalant un élément de L1, puis un de L2, jusqu'à épuisement de l'une des
 deux. Le reste est ajouté à la fin.
+
+
+
 void InsererEnFin(LISTE **L, int val) {
  LISTE *nouveau = (LISTE*)malloc(sizeof(LISTE));
  nouveau->val = val; nouveau->suivant = NULL;
@@ -85,9 +134,27 @@ LISTE* FusionAlternance(LISTE *L1, LISTE *L2) {
  while (p2) { InsererEnFin(&resultat, p2->val); p2 = p2->suivant; }
  return resultat;
 }
-Complexité : O((n+m)²) à cause de InsererEnFin — optimisable en gardant un pointeur sur la fin.
-7.5 Exercice 5 — Destruction d'une liste
+
+
+
+Complexité : 
+
+
+
+O((n+m)²) à cause de InsererEnFin — optimisable en gardant un pointeur sur la fin.
+
+
+
+
+7.5 Exercice 5 —
+
+
+
+ Destruction d'une liste
 Libération de tous les noeuds un à un en avançant avec un pointeur temporaire.
+
+
+
 void DetruireListe(LISTE **L) { LISTE *ptr;
  while (*L != NULL) {
  ptr = *L;
@@ -95,10 +162,22 @@ void DetruireListe(LISTE **L) { LISTE *ptr;
  free(ptr);
  }
 }
-Complexité : O(n) — chaque noeud est libéré exactement une fois.
-7.6 Exercice 6 — Piles : séparation pairs/impairs
+Complexité : 
+
+
+O(n) — chaque noeud est libéré exactement une fois.
+
+
+
+7.6 Exercice 6 
+
+
+— Piles : séparation pairs/impairs
 On dépile P1 et on répartit les éléments dans P2 (pairs) et P3 (impairs), puis on transfère P3 dans P2 pour
 obtenir une pile unifiée pairs-puis-impairs.
+
+
+
 typedef struct stack { int data; struct stack *next; } STACK;
 void push(STACK **head, int value) {
  STACK *node = (STACK*)malloc(sizeof(STACK));
@@ -124,10 +203,22 @@ STACK* PairImpair(STACK *P1) {
  while (P3) { val = pop(&P3); push(&P2, val); }
  return P2;
 }
+
+
+
 Complexité : O(n) — chaque élément est manipulé un nombre constant de fois.
-7.7 Exercice 7 — Files et détection de palindrome
+
+
+
+7.7 Exercice 7 —
+
+
+ Files et détection de palindrome
 On place la première moitié de la chaîne dans une pile (LIFO), et on compare lettre par lettre avec la seconde
 moitié défilée depuis la file (FIFO). Si toutes les paires correspondent, c'est un palindrome.
+
+
+
 struct queue_node { char data; struct queue_node *next; };
 struct queue { struct queue_node *first; struct queue_node *last; };
 void enqueue(struct queue *q, char value) {
@@ -162,4 +253,7 @@ int EstPalindrome(char chaine[]) {
  }
  return 1;
 }
+
+
+
 Complexité : O(n) en temps et en espace.
